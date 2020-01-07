@@ -20,7 +20,7 @@ SAMPLE=metagenomic sample identifier (e.g. SAMPLEB15)
 Total metagenomic reads (paired, fastq format) are assumed to be in a folder with relative path ../intermediateResults/ from where Script is called and have following regular expression compatible names:\
 unmerged read 1 files = ../intermediateResults/BBunmerged*${SAMPLE}_1*\
 unmerged read 2 files = ../intermediateResults/BBunmerged*${SAMPLE}_2*\
-merged read files = ../intermediateResults/BBmerged*$SAMPLE*\
-unpaired reads = ../intermediateResults/$SAMPLE*unpaired*\
+merged read files = ../intermediateResults/BBmerged*${SAMPLE}*\
+unpaired reads = ../intermediateResults/${SAMPLE}*unpaired*\
 
 
