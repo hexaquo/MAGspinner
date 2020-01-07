@@ -13,10 +13,8 @@ Necessary R libraries:
 Biostrings
 scales
 
-Assumed data available for input is MAG, and metagenomic reads that have been that have been merged and filtered trhough BBduk:
-
+Assumed data available for input is MAG, and metagenomic reads that have been that have been merged and filtered through BBduk:
 BIN=Initial MAG
-
 SAMPLE=metagenomic sample identifier (e.g. SAMPLEB15)
 
 metagenomic reads (paired, fastq format) are assumed to be in a folder with relative path ../intermediateResults/ from where Script is called and have following regular expression compatible names:
