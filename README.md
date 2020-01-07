@@ -23,4 +23,6 @@ unmerged read 2 files = ../intermediateResults/BBunmerged*${SAMPLE}_2*\
 merged read files = ../intermediateResults/BBmerged*${SAMPLE}*\
 unpaired reads = ../intermediateResults/${SAMPLE}*unpaired*\
 
+Craig Herbold, University of Vienna
+
 
