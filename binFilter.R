@@ -118,10 +118,10 @@ for(j in c(1:length(allContigs))){
 	contigLengthVector[j]=maxLength
 	
 	if(maxLength>=contigEvalLength){
-		startPoints=sample(c(1:(maxLength-contigEvalLength-1)),size=maxLength/1000)
+		startPoints=sample(c(1:(maxLength-contigEvalLength-1))[c(1:(maxLength-contigEvalLength-1))>0],size=maxLength/1000)
 		for(m in startPoints){
 			if(m+contigEvalLength<=maxLength){
-				thisChunkDepth=(depthVector[m:(m+contigEvalLength)])
+				thisChunkDepth=(depthVector[m:(m+contigEvalLength-1)])
 				thisChunkDepthVector<-c(thisChunkDepthVector,median(thisChunkDepth))
 			}		
 		}
