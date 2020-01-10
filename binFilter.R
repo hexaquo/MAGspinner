@@ -41,7 +41,7 @@ tetranucleotidePcoA=prcomp(log10(tetranucleotide),center=TRUE,scale=TRUE)
 # now create second tetra for modeled distribution
 tetraDistributionSet=NULL
 for(i in c(1:length(sequence))){
-	for(j in sample((length(sequence[[i]])-contigEvalLength),(length(sequence[[i]])-contigEvalLength)/1000)){
+	for(j in sample(c(1:(length(sequence[[i]])-contigEvalLength+1)),size=(length(sequence[[i]])-1000)/1000)){
 		tetraDistributionSet=c(tetraDistributionSet,as.character(sequence[[i]][j:(j+contigEvalLength)]))
 	}
 }
