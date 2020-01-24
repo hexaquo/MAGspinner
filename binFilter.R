@@ -11,7 +11,7 @@ contigEvalLength=2000
 #Pass the fasta file as a command line argument - fasta file must be folded
 bin=commandArgs()[3]
 
-foldFile=gsub(".fa",".fold",bin)
+foldFile=gsub(".fa$",".fold",bin)
 #fold data
 system(paste("fold -w 1000 ",bin," > ",foldFile, sep=""))
 #---Read sequences into a DNAString variable---#
@@ -83,6 +83,8 @@ if(class(unpairedMappingDepth)!="try-error"){
 }else{
 	unpairedMappingDepth=rbind(c("PLACEHOLDER","0"),c("PLACEHOLDER","0"))
 }
+allContigs=allContigs[match(names(sequence),allContigs)]
+
 medianDepthVector=rep(0,length(allContigs))
 names(medianDepthVector)=allContigs
 contigLengthVector=rep(0,length(allContigs))
@@ -199,7 +201,7 @@ points(tetraSeq,length(apply(tetranucleotidePcoA$x,1,sum))*tetraNullModel,type="
 
 
 #plot depth model
-depthHist=hist(medianDepthVector,breaks=c(min(c(medianDepthVector,chunkDepthVector)):max(c(medianDepthVector,chunkDepthVector))),col="lightblue",main="coverage distribution")
+depthHist=hist(medianDepthVector,breaks=c(min(c(medianDepthVector,chunkDepthVector)):max(c(medianDepthVector,quantile(chunkDepthVector,0.99)))),col="lightblue",main="coverage distribution")
 depthSeq=seq(min(depthHist$mids),max(depthHist$mids),length=10000)
 depthNullModel=dnorm(seq(min(depthHist$mids),max(depthHist$mids),length=10000),mean=mean(chunkDepthVector),sd=sd(chunkDepthVector))
 lowerBoundP=BH_P_cutoff_depth
