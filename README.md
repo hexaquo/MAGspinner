@@ -27,12 +27,12 @@ unpaired reads = ../intermediateResults/$SAMPLE\*unpaired\*
 Craig Herbold, University of Vienna
 
 
-This software is provided as-is with improvements added as I have time. The procedure was developed conceptually by Petra Pjevac and Dimitri Meier in the following manuscripts:
+This software is provided as-is with improvements added as I have time. The procedure was developed conceptually by Petra Pjevac and Dimitri Meier in the following manuscripts:\
 
-Dyksma, S., Bischof, K., Fuchs, B.M., Hoffmann, K., Meier, D., Meyerdierks, A., Pjevac, P., Probandt, D., Richter, M., Stepanauskas, R. and Mußmann, M., 2016. Ubiquitous Gammaproteobacteria dominate dark carbon fixation in coastal sediments. The ISME journal, 10(8), pp.1939-1953.
-Mußmann, M., Pjevac, P., Krüger, K. and Dyksma, S., 2017. Genomic repertoire of the Woeseiaceae/JTB255, cosmopolitan and abundant core members of microbial communities in marine sediments. The ISME journal, 11(5), pp.1276-1281.
+Dyksma, S., Bischof, K., Fuchs, B.M., Hoffmann, K., Meier, D., Meyerdierks, A., Pjevac, P., Probandt, D., Richter, M., Stepanauskas, R. and Mußmann, M., 2016. Ubiquitous Gammaproteobacteria dominate dark carbon fixation in coastal sediments. The ISME journal, 10(8), pp.1939-1953.\
+Mußmann, M., Pjevac, P., Krüger, K. and Dyksma, S., 2017. Genomic repertoire of the Woeseiaceae/JTB255, cosmopolitan and abundant core members of microbial communities in marine sediments. The ISME journal, 11(5), pp.1276-1281.\
 
-Automation was developed into MAGspinner and described in the following manuscripts:
-<EMBARGO to be lifted Friday Feb. 7>
+Automation was developed into MAGspinner and described in the following manuscripts:\
+<EMBARGO to be lifted Friday Feb. 7>\
 
-Please consider citing these manuscripts if you use MAGspinner before it is developed into a stand-alone manuscript.
+Please consider citing these manuscripts if you use MAGspinner before it is developed into a stand-alone manuscript.\
