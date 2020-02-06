@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name binReassembly
-#SBATCH --cpus-per-task=8
-#SBATCH --mem=80GB
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=50GB
 #SBATCH --output=binReassembly-%j.out
 #SBATCH --error=binReassembly-%j.err
 
@@ -141,7 +141,7 @@ do
 
     module load checkm
     echo "Bin Id,Marker lineage,# genomes,# markers,# marker sets,Completeness,Contamination,Strain heterogeneity,Genome size (bp),# ambiguous bases,# scaffolds,# contigs,N50 (scaffolds),N50 (contigs),Mean scaffold length (bp),Mean contig length (bp),Longest scaffold (bp),Longest contig (bp),GC,GC std (scaffolds > 1kbp),Coding density,Translation table,# predicted genes,0,1,2,3,4,5+" >${BIN%.gz}.reassembledBins.temp/${BIN%.gz}.checkM.stats.txt
-    checkm lineage_wf -x fa -t $SLURM_CPUS_PER_TASK --pplacer_threads $SLURM_CPUS_PER_TASK ${BIN%.gz}.reassembledBins.temp tempOut
+    checkm lineage_wf -x fa -t $SLURM_CPUS_PER_TASK ${BIN%.gz}.reassembledBins.temp tempOut
     checkm qa --tab_table -o 2 tempOut/lineage.ms tempOut | grep -v "^\[" | awk 'BEGIN{FS="\t";OFS=","};{if(NR>1){$1=$1".fa";print $0}}' | tr '\t' ',' > checkM.temp
     rm -r tempOut
     cat checkM.temp >> ${BIN%.gz}.reassembledBins.temp/${BIN%.gz}.checkM.stats.txt
@@ -164,8 +164,8 @@ if [ ! -d ${HOMEFOLDER}/../intermediateResults ]
 then
     mkdir ${HOMEFOLDER}/../intermediateResults
 fi
-if [ ! -d ${HOMEFOLDER}/../intermediateResults/${BIN%.gz}.reassembledBins ]
+if [ ! -d ${HOMEFOLDER}/../intermediateResults/$SAMPLE.${BIN%.gz}.reassembledBins ]
 then
-    mkdir ${HOMEFOLDER}/../intermediateResults/${BIN%.gz}.reassembledBins
+    mkdir ${HOMEFOLDER}/../intermediateResults/$SAMPLE.${BIN%.gz}.reassembledBins
 fi
-mv ${BIN%.gz}.reassembledBins/* ${HOMEFOLDER}/../intermediateResults/${BIN%.gz}.reassembledBins
+mv ${BIN%.gz}.reassembledBins/* ${HOMEFOLDER}/../intermediateResults/$SAMPLE.${BIN%.gz}.reassembledBins
