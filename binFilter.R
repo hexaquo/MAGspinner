@@ -175,7 +175,7 @@ if(length(removeContigs)>0){
 }
 
 #PLOTTING
-pdf(file=gsub(".fa",".fa.binFilter.pdf",bin))
+pdf(file=gsub(".fa$",".fa.binFilter.pdf",bin))
 #plotting tetranucleotides
 heatmapContigColors=rep("NA",dim(tetranucleotide)[1])
 heatmapContigColors[match(removeContigs_tetra,rownames(tetranucleotide))]="red"
