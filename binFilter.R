@@ -6,7 +6,8 @@ countGenomes<-NULL
 countContigs<-NULL
 countsForDistribution=NULL
 alpha=0.05
-contigEvalLength=2000
+contigEvalLength=1000
+unevennessOverride=10000  # kill switch for unevenness-based removal. Contigs 10kb and larger can only be removed by composition/coverage
 
 #Pass the fasta file as a command line argument - fasta file must be folded
 bin=commandArgs()[3]
@@ -129,10 +130,12 @@ for(j in c(1:length(allContigs))){
 		}
 	}
 	chunkDepthVector<-c(chunkDepthVector,thisChunkDepthVector)
-	if(abs(log10((median(depthVector[1:contigEvalLength])+1)/(median(rev(depthVector)[1:contigEvalLength])+1)))>1){
-		removeContigs_uneven<-c(removeContigs_uneven,myContig)
-		unevenList[[myContig]]=depthVector
-	}
+	if(maxLength>=unevennessOverride){
+		if(abs(log10((median(depthVector[1:contigEvalLength])+1)/(median(rev(depthVector)[1:contigEvalLength])+1)))>1){
+			removeContigs_uneven<-c(removeContigs_uneven,myContig)
+			unevenList[[myContig]]=depthVector
+		}
+	}	
 }
 removeContigs=union(removeContigs,removeContigs_uneven)
 
