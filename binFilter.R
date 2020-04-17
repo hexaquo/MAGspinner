@@ -6,7 +6,7 @@ countGenomes<-NULL
 countContigs<-NULL
 countsForDistribution=NULL
 alpha=0.05
-contigEvalLength=1000
+contigEvalLength=2000
 unevennessOverride=10000  # kill switch for unevenness-based removal. Contigs 10kb and larger can only be removed by composition/coverage
 
 #Pass the fasta file as a command line argument - fasta file must be folded
