@@ -31,9 +31,11 @@ This software is provided as-is with improvements added as I have time. The proc
 Dyksma, S., Bischof, K., Fuchs, B.M., Hoffmann, K., Meier, D., Meyerdierks, A., Pjevac, P., Probandt, D., Richter, M., Stepanauskas, R. and Mußmann, M., 2016. Ubiquitous Gammaproteobacteria dominate dark carbon fixation in coastal sediments. The ISME journal, 10(8), pp.1939-1953.\
 Mußmann, M., Pjevac, P., Krüger, K. and Dyksma, S., 2017. Genomic repertoire of the Woeseiaceae/JTB255, cosmopolitan and abundant core members of microbial communities in marine sediments. The ISME journal, 11(5), pp.1276-1281.
 
-Automation was developed into MAGspinner and described in the following manuscripts:\
-Yang, Y., Daims, H., Liu, Y., Herbold, C.W., Pjevac, P., Lin, J.G., Li, M. and Gu, J.D., 2020. Activity and Metabolic Versatility of Complete Ammonia Oxidizers in Full-Scale Wastewater Treatment Systems. Mbio, 11(2).\
-Kitzinger, K., Marchant, H.K., Bristow, L.A., Herbold, C.W., Padilla, C.C., Kidane, A.T., Littmann, S., Daims, H., Pjevac, P., Stewart, F.J. and Wagner, M., 2020. Single cell analyses reveal contrasting life strategies of the two main nitrifiers in the ocean. Nature communications, 11(1), pp.1-12.\
+Automation was developed into MAGspinner and described in the following manuscripts:
+
+Yang, Y., Daims, H., Liu, Y., Herbold, C.W., Pjevac, P., Lin, J.G., Li, M. and Gu, J.D., 2020. Activity and Metabolic Versatility of Complete Ammonia Oxidizers in Full-Scale Wastewater Treatment Systems. Mbio, 11(2).
+
+Kitzinger, K., Marchant, H.K., Bristow, L.A., Herbold, C.W., Padilla, C.C., Kidane, A.T., Littmann, S., Daims, H., Pjevac, P., Stewart, F.J. and Wagner, M., 2020. Single cell analyses reveal contrasting life strategies of the two main nitrifiers in the ocean. Nature communications, 11(1), pp.1-12.
 
 
 Please consider citing these manuscripts if you use MAGspinner before it is developed into a stand-alone manuscript.
