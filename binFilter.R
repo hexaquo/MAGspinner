@@ -130,7 +130,7 @@ for(j in c(1:length(allContigs))){
 		}
 	}
 	chunkDepthVector<-c(chunkDepthVector,thisChunkDepthVector)
-	if(maxLength>=unevennessOverride){
+	if(maxLength<unevennessOverride){
 		if(abs(log10((median(depthVector[1:contigEvalLength])+1)/(median(rev(depthVector)[1:contigEvalLength])+1)))>1){
 			removeContigs_uneven<-c(removeContigs_uneven,myContig)
 			unevenList[[myContig]]=depthVector
