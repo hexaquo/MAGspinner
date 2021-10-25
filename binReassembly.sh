@@ -30,26 +30,26 @@ set -e
 	# Wait for the lockfile for max. 1 hour (3600 s), to not block the queue forever in case of dead lock files.
 	flock -w 3600 200
 	# Synchronize the relevant files to the local temporary directory
-	zgrep -h "^" ../intermediateResults/BBunmerged*${SAMPLE}_1* > ${THISWORKFOLDER}/${SAMPLE}.R1.fastq
+	zgrep -h "^" ../intermediateResults/BBunmerged*${SAMPLE}_1*fastq.gz > ${THISWORKFOLDER}/${SAMPLE}.R1.fastq
 	
     ) 200>~/${SAMPLE}.R1.fastq.lock
     (
 	# Wait for the lockfile for max. 1 hour (3600 s), to not block the queue forever in case of dead lock files.
 	flock -w 3600 200
 	# Synchronize the relevant files to the local temporary directory
-	zgrep -h "^" ../intermediateResults/BBunmerged*${SAMPLE}_2* > ${THISWORKFOLDER}/${SAMPLE}.R2.fastq
+	zgrep -h "^" ../intermediateResults/BBunmerged*${SAMPLE}_2*fastq.gz > ${THISWORKFOLDER}/${SAMPLE}.R2.fastq
     ) 200>~/${SAMPLE}.R2.fastq.lock
     (
 	# Wait for the lockfile for max. 1 hour (3600 s), to not block the queue forever in case of dead lock files.
 	flock -w 3600 200
 	# Synchronize the relevant files to the local temporary directory
-	zgrep -h "^" ../intermediateResults/BBmerged*$SAMPLE* >> ${THISWORKFOLDER}/${SAMPLE}.merged.fastq
+	zgrep -h "^" ../intermediateResults/BBmerged*$SAMPLE*fastq.gz >> ${THISWORKFOLDER}/${SAMPLE}.merged.fastq
     ) 200>~/${SAMPLE}.merged.fastq.lock
     (
 	# Wait for the lockfile for max. 1 hour (3600 s), to not block the queue forever in case of dead lock files.
 	flock -w 3600 200
 	# Synchronize the relevant files to the local temporary directory
-	zgrep -h "^" ../intermediateResults/$SAMPLE*unpaired* > ${THISWORKFOLDER}/${SAMPLE}.unpaired.fastq
+	zgrep -h "^" ../intermediateResults/$SAMPLE*unpaired*fastq.gz > ${THISWORKFOLDER}/${SAMPLE}.unpaired.fastq
     ) 200>~/${SAMPLE}.unpaired.fastq.lock
     (
 	# Wait for the lockfile for max. 1 hour (3600 s), to not block the queue forever in case of dead lock files.
@@ -83,7 +83,17 @@ do
 	bbmap.sh in=${SAMPLE}.merged.fastq outm=${BIN%.gz}.merged.98.fastq minid=0.98 idfilter=0.98  threads=$SLURM_CPUS_PER_TASK -Xmx20g
 	module unload bbmap
 	module load spades
-	spades.py --12 ${BIN%.gz}.PE.98.fastq -s ${BIN%.gz}.unpaired.98.fastq --merged ${BIN%.gz}.merged.98.fastq -t $SLURM_CPUS_PER_TASK -k 21,33,55,77,99,127 --careful --only-assemble -o $SAMPLE.assembly --trusted-contigs ${BIN%.gz}
+	spades.py --isolate --pe-12 1 ${BIN%.gz}.PE.98.fastq --pe-s 1 ${BIN%.gz}.unpaired.98.fastq --pe-m 1 ${BIN%.gz}.merged.98.fastq -t $SLURM_CPUS_PER_TASK -k 21,33,55,77,99,127 --only-assemble -o $SAMPLE.assembly --trusted-contigs ${BIN%.gz}
+	if [ ! -f $SAMPLE.assembly/scaffolds.fasta ]
+	then
+	   mkdir $HOMEFOLDER/$SAMPLE.${BIN%.gz}.$SAMPLE.reassembledBins.spadesError
+	   mv ${BIN%.gz}.PE.98.fastq $HOMEFOLDER/$SAMPLE.${BIN%.gz}.$SAMPLE.reassembledBins.spadesError
+	   mv ${BIN%.gz}.unpaired.98.fastq $HOMEFOLDER/$SAMPLE.${BIN%.gz}.$SAMPLE.reassembledBins.spadesError
+	   mv ${BIN%.gz}.merged.98.fastq $HOMEFOLDER/$SAMPLE.${BIN%.gz}.$SAMPLE.reassembledBins.spadesError
+	   mv ${BIN%.gz} $HOMEFOLDER/$SAMPLE.${BIN%.gz}.$SAMPLE.reassembledBins.spadesError
+	   echo "spades.py --isolate --pe-12 ${BIN%.gz}.PE.98.fastq --pe-s ${BIN%.gz}.unpaired.98.fastq --merged ${BIN%.gz}.merged.98.fastq -t $SLURM_CPUS_PER_TASK -k 21,33,55,77,99,127 --careful --only-assemble -o $SAMPLE.assembly --trusted-contigs ${BIN%.gz}" $HOMEFOLDER/$SAMPLE.${BIN%.gz}.$SAMPLE.reassembledBins.spadesError/command.txt
+	   exit
+	fi
 	module unload spades
 	cp ${BIN%.gz} ${BIN%.gz}.reassembledBins.temp/${BIN%.gz}.round.$((round-1)).fa
 	mv ${BIN%.gz} ${BIN%.gz}.reassembledBins/${BIN%.gz}.round.$((round-1)).fa
@@ -164,8 +174,8 @@ if [ ! -d ${HOMEFOLDER}/../intermediateResults ]
 then
     mkdir ${HOMEFOLDER}/../intermediateResults
 fi
-if [ ! -d ${HOMEFOLDER}/../intermediateResults/$SAMPLE.${BIN%.gz}.reassembledBins ]
+if [ ! -d ${HOMEFOLDER}/../intermediateResults/$SAMPLE.${BIN%.gz}.$SAMPLE.reassembledBins ]
 then
-    mkdir ${HOMEFOLDER}/../intermediateResults/$SAMPLE.${BIN%.gz}.reassembledBins
+    mkdir ${HOMEFOLDER}/../intermediateResults/$SAMPLE.${BIN%.gz}.$SAMPLE.reassembledBins
 fi
-mv ${BIN%.gz}.reassembledBins/* ${HOMEFOLDER}/../intermediateResults/$SAMPLE.${BIN%.gz}.reassembledBins
+mv ${BIN%.gz}.reassembledBins/* ${HOMEFOLDER}/../intermediateResults/$SAMPLE.${BIN%.gz}.$SAMPLE.reassembledBins
