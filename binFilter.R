@@ -29,7 +29,7 @@ if(length(removeContigs_length)>0){
 	unpairedMappingDepth=unpairedMappingDepth[which(is.na(match(unpairedMappingDepth[,1],removeContigs_length))),]
 	peMappingDepth=peMappingDepth[which(is.na(match(peMappingDepth[,1],removeContigs_length))),]
 	mergedMappingDepth=mergedMappingDepth[which(is.na(match(mergedMappingDepth[,1],removeContigs_length))),]
-	sequence=sequence[-which(width(sequence)<contigEvalLength)]
+	sequence=sequence[which(width(sequence)>=contigEvalLength)]
 }
 removeContigs=removeContigs_length
 
@@ -84,7 +84,11 @@ if(class(unpairedMappingDepth)!="try-error"){
 }else{
 	unpairedMappingDepth=rbind(c("PLACEHOLDER","0"),c("PLACEHOLDER","0"))
 }
-allContigs=allContigs[match(names(sequence),allContigs)]
+
+removeContigs_unmapped=setdiff(names(sequence),allContigs)
+removeContigs=union(removeContigs,removeContigs_unmapped)
+
+allContigs=intersect(names(sequence),allContigs)
 
 medianDepthVector=rep(0,length(allContigs))
 names(medianDepthVector)=allContigs
@@ -101,13 +105,13 @@ for(j in c(1:length(allContigs))){
 	thisContigDepth_unpaired=NULL
 	thisChunkDepthVector=NULL
 	maxLength=width(sequence)[which(names(sequence)==allContigs[j])]
-	if(sum(peMappingDepth[,1]==myContig)>0){
+	if(length(peMappingDepth[,1]==myContig)>0){
 		thisContigDepth_pe=peMappingDepth[peMappingDepth[,1]==myContig,c(2:3)]
 	}
-	if(sum(mergedMappingDepth[,1]==myContig)>0){
+	if(length(mergedMappingDepth[,1]==myContig)>0){
 		thisContigDepth_merged=mergedMappingDepth[mergedMappingDepth[,1]==myContig,c(2:3)]
 	}
-	if(sum(unpairedMappingDepth[,1]==myContig)>0){
+	if(length(unpairedMappingDepth[,1]==myContig)>0){
 		thisContigDepth_unpaired=unpairedMappingDepth[unpairedMappingDepth[,1]==myContig,c(2:3)]
 	}
 	contigPositions=c(1:maxLength)
@@ -171,6 +175,9 @@ if(length(removeContigs)>0){
 	}
 	if(length(removeContigs_tetra)>0){
 		write(paste("composition-based",removeContigs_tetra,sep="\t"),file="removeContigs.txt",append=TRUE)
+	}
+	if(length(removeContigs_unmapped)>0){
+		write(paste("unmapped",removeContigs_unmapped,sep="\t"),file="removeContigs.txt",append=TRUE)
 	}
 }else{
 	writeXStringSet(sequence,paste(bin,".clean",sep=""))
