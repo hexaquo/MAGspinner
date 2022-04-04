@@ -83,12 +83,12 @@ do
 	bbmap.sh in=${SAMPLE}.merged.fastq outm=${BIN%.gz}.merged.98.fastq minid=0.98 idfilter=0.98  threads=$SLURM_CPUS_PER_TASK -Xmx20g
 	module unload bbmap
 	module load spades
-	spades.py --12 ${BIN%.gz}.PE.98.fastq -s ${BIN%.gz}.unpaired.98.fastq --merged ${BIN%.gz}.merged.98.fastq -t $SLURM_CPUS_PER_TASK -k 21,33,55,77,99,127 --careful --only-assemble -o $SAMPLE.assembly --trusted-contigs ${BIN%.gz}
+	spades.py --12 ${BIN%.gz}.PE.98.fastq -s ${BIN%.gz}.unpaired.98.fastq --merged ${BIN%.gz}.merged.98.fastq -t $SLURM_CPUS_PER_TASK -k 21,33,55,77,99,127 --careful --only-assemble -o $SAMPLE.assembly --untrusted-contigs ${BIN%.gz}
 	module unload spades
 	cp ${BIN%.gz} ${BIN%.gz}.reassembledBins.temp/${BIN%.gz}.round.$((round-1)).fa
 	mv ${BIN%.gz} ${BIN%.gz}.reassembledBins/${BIN%.gz}.round.$((round-1)).fa
 	cp $HOMEFOLDER/../Scripts/binFilter.R ./
-	cat $SAMPLE.assembly/scaffolds.fasta > ${BIN%.gz}
+	cat $SAMPLE.assembly/contigs.fasta > ${BIN%.gz}
 	# map to new bin for cleanup
 	module load bbmap
 	module load samtools
